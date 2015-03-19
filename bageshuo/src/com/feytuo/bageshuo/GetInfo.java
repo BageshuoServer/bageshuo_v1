@@ -1,4 +1,4 @@
-package com.feytuo.user;
+package com.feytuo.bageshuo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
