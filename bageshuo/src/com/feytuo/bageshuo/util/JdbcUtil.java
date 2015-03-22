@@ -6,15 +6,53 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-//JDBC¹¤¾ßÀà£º¹Ø±ÕÁ÷ºÍÈ¡µÃÁ¬½Ó
+//JDBCï¿½ï¿½ï¿½ï¿½ï¿½à£ºï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 public final class JdbcUtil {
 	private static ComboPooledDataSource dataSource;
 	static{
 		dataSource = new ComboPooledDataSource();
 	}
-	//È¡µÃÊı¾İÔ´
+	//å–å¾—è¿æ¥æ± æ•°æ®æº
 	public static ComboPooledDataSource getDataSource() {
 		return dataSource;
+	}
+	
+	//äº‹åŠ¡å¼€å§‹
+	public static void beginTransaction(Connection conn){
+		if(conn!=null) {
+			try {
+				if(conn.getAutoCommit()){
+					conn.setAutoCommit(false);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	//äº‹åŠ¡å¼€å§‹
+	public static void commitTransaction(Connection conn){
+		if(conn!=null) {
+			try {
+				if(!conn.getAutoCommit()){
+					conn.commit();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//äº‹åŠ¡å›æ»š
+	public static void rollbackTransaction(Connection conn){
+		if(conn!=null) {
+			try {
+				if(!conn.getAutoCommit()){
+					conn.rollback();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
 

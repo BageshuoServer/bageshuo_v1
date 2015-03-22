@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Remote
-Source Server Version : 50539
-Source Host           : 115.29.44.211:3306
+Source Server         : hibernate
+Source Server Version : 50704
+Source Host           : localhost:3306
 Source Database       : bageshuo
 
 Target Server Type    : MYSQL
-Target Server Version : 50539
+Target Server Version : 50704
 File Encoding         : 65001
 
-Date: 2015-03-21 20:01:39
+Date: 2015-03-22 11:07:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -73,8 +73,8 @@ CREATE TABLE `comment` (
   PRIMARY KEY (`com_id`),
   KEY `com_uid` (`u_id`),
   KEY `com_invid` (`inv_id`),
-  CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`u_id`) REFERENCES `user` (`u_id`) ON DELETE CASCADE,
-  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`inv_id`) REFERENCES `invitation` (`inv_id`) ON DELETE CASCADE
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`inv_id`) REFERENCES `invitation` (`inv_id`) ON DELETE CASCADE,
+  CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`u_id`) REFERENCES `user` (`u_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -97,6 +97,8 @@ CREATE TABLE `community` (
 -- ----------------------------
 -- Records of community
 -- ----------------------------
+INSERT INTO `community` VALUES ('1', '222', 'a', 'a', 'a');
+INSERT INTO `community` VALUES ('2', '333', 'b', 'b', 'b');
 
 -- ----------------------------
 -- Table structure for `community_user`
@@ -116,7 +118,8 @@ CREATE TABLE `community_user` (
 -- ----------------------------
 -- Records of community_user
 -- ----------------------------
-
+INSERT INTO `community_user` VALUES ('2', '1', '3');
+INSERT INTO `community_user` VALUES ('4', '2', '3');
 
 -- ----------------------------
 -- Table structure for `invitation`
@@ -167,6 +170,31 @@ CREATE TABLE `problem` (
 -- ----------------------------
 -- Records of problem
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for `testuser`
+-- ----------------------------
+DROP TABLE IF EXISTS `testuser`;
+CREATE TABLE `testuser` (
+  `name` varchar(10) NOT NULL,
+  `password` varchar(10) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of testuser
+-- ----------------------------
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '1');
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '2');
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '3');
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '4');
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '5');
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '6');
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '7');
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '8');
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '9');
+INSERT INTO `testuser` VALUES ('ttt', 'aaa', '10');
 
 -- ----------------------------
 -- Table structure for `topic`
@@ -225,10 +253,12 @@ CREATE TABLE `user` (
   `u_home` varchar(10) NOT NULL,
   `u_sign` varchar(10) DEFAULT NULL,
   `u_push_id` varchar(10) NOT NULL,
+  `u_type` varchar(10) NOT NULL,
+  `device_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`u_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-
+INSERT INTO `user` VALUES ('3', 'ee', 'ee', 'e', 'e', 'e', 'e', 'e', 'e', 'e', '', null);

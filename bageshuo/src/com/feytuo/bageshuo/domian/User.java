@@ -1,9 +1,10 @@
 package com.feytuo.bageshuo.domian;
 
 /**
- * ÓÃ»§
+ * ï¿½Ã»ï¿½
+ * 
  * @author Tms
- *
+ * 
  */
 public class User {
 	private Integer u_id;
@@ -11,7 +12,7 @@ public class User {
 	private String u_pwd;
 	private String u_head;
 	private String u_nick;
-	private Integer u_bage;
+	private String u_bage;
 	private String u_sex;
 	private String u_home;
 	private String u_sign;
@@ -67,11 +68,11 @@ public class User {
 		this.u_nick = u_nick;
 	}
 
-	public Integer getU_bage() {
+	public String getU_bage() {
 		return u_bage;
 	}
 
-	public void setU_bage(Integer u_bage) {
+	public void setU_bage(String u_bage) {
 		this.u_bage = u_bage;
 	}
 
@@ -115,5 +116,4 @@ public class User {
 		this.device_id = device_id;
 	}
 
-	
 }

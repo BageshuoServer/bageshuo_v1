@@ -10,11 +10,47 @@
     <servlet-name>UserRegisterServlet</servlet-name>
     <servlet-class>com.feytuo.bageshuo.servlet.UserRegisterServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>NormalLoginServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.NormalLoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpdatePwdServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.UpdatePwdServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SetUserInfoServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.SetUserInfoServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ThreeLoginServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.ThreeLoginServlet</servlet-class>
+  </servlet>
+
+
+
+
 
 
   <servlet-mapping>
     <servlet-name>UserRegisterServlet</servlet-name>
     <url-pattern>/user/Register</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>NormalLoginServlet</servlet-name>
+    <url-pattern>/user/NormalLogin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdatePwdServlet</servlet-name>
+    <url-pattern>/user/UpdatePwd</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SetUserInfoServlet</servlet-name>
+    <url-pattern>/user/SetUserInfo</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ThreeLoginServlet</servlet-name>
+    <url-pattern>/user/ThreeLogin</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
