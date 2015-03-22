@@ -1,5 +1,10 @@
 package com.feytuo.bageshuo.domian;
 
+/**
+ * ”√ªß
+ * @author Tms
+ *
+ */
 public class User {
 	private Integer u_id;
 	private String u_name;
@@ -10,6 +15,17 @@ public class User {
 	private String u_sex;
 	private String u_home;
 	private String u_sign;
+	private String u_type;
+	private String device_id;
+	private String u_push_id;
+
+	public String getU_push_id() {
+		return u_push_id;
+	}
+
+	public void setU_push_id(String u_push_id) {
+		this.u_push_id = u_push_id;
+	}
 
 	public Integer getU_id() {
 		return u_id;
@@ -83,4 +99,21 @@ public class User {
 		this.u_sign = u_sign;
 	}
 
+	public String getU_type() {
+		return u_type;
+	}
+
+	public void setU_type(String u_type) {
+		this.u_type = u_type;
+	}
+
+	public String getDevice_id() {
+		return device_id;
+	}
+
+	public void setDevice_id(String device_id) {
+		this.device_id = device_id;
+	}
+
+	
 }

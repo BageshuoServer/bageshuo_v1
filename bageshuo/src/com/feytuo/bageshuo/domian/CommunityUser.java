@@ -1,6 +1,11 @@
 package com.feytuo.bageshuo.domian;
 
-public class Community_User {
+/**
+ * 社区和用户中间表
+ * @author Tms
+ *
+ */
+public class CommunityUser {
 	private Integer co_u_id;
 	private Integer co_id;
 	private Integer u_id;

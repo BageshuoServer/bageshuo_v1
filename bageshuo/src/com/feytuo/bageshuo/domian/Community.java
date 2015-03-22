@@ -1,5 +1,10 @@
 package com.feytuo.bageshuo.domian;
 
+/**
+ * ÉçÇø
+ * @author Tms
+ *
+ */
 public class Community {
 	private Integer co_id;
 	private String co_name;

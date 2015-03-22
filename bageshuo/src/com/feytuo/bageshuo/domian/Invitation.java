@@ -1,5 +1,10 @@
 package com.feytuo.bageshuo.domian;
 
+/**
+ * Ьћзг
+ * @author Tms
+ *
+ */
 public class Invitation {
     private Integer inv_id;
     private String inv_location;

@@ -1,5 +1,10 @@
 package com.feytuo.bageshuo.domian;
 
+/**
+ * Ìû×ÓÆÀÂÛ
+ * @author Tms
+ *
+ */
 public class Comment {
 	private Integer com_id;
 	private String com_location;
