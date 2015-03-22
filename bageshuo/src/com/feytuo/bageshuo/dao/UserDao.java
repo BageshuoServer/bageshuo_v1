@@ -14,7 +14,7 @@ import com.feytuo.bageshuo.util.JdbcUtil;
  */
 public class UserDao {
 
-	public boolean insertUser(User user) throws SQLException {
+	public boolean saveUser(User user) throws SQLException {
 		boolean flag = false;
 		String sql = "insert into user() values()";
 		QueryRunner runner = new QueryRunner(JdbcUtil.getDataSource());
