@@ -1,4 +1,4 @@
-package com.feytuo.bageshuo.servlet;
+package com.feytuo.bageshuo.servlet.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;

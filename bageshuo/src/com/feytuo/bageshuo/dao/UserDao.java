@@ -209,6 +209,43 @@ public class UserDao {
 				// 回滚
 				JdbcUtil.rollbackTransaction(conn);
 			}
+			
+		} catch (Exception e) {
+			// 回滚
+			JdbcUtil.rollbackTransaction(conn);
+			throw e;
+		}
+		return isUpdate;
+	}
+	
+	
+	/**
+	 * 设置用户的基本信息
+	 * @param device_id
+	 * @param u_head
+	 * @param u_nick
+	 * @param u_sex
+	 * @param u_home
+	 * @param u_sign
+	 * @param u_id
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean updateUserInfo(String device_id, String u_head,String u_nick,String u_sex,String u_home,String u_sign,int u_id) throws Exception {
+		boolean isUpdate = false;
+		String sql = "update user set device_id=?,u_head=?,u_nick=?,u_sex=?,u_home=?,u_sign=? where u_id =? ";
+		Object[] params = new Object[] { device_id, u_head, u_nick,u_sex,u_home,u_sign,u_id };
+		QueryRunner runner = new QueryRunner();
+		try {
+			JdbcUtil.beginTransaction(conn); // 开启事务
+			int sqlResult = runner.update(conn, sql, params);
+			if (sqlResult > 0) {
+				isUpdate = true;
+				JdbcUtil.commitTransaction(conn); // 提交
+			} else {
+				// 回滚
+				JdbcUtil.rollbackTransaction(conn);
+			}
 
 		} catch (Exception e) {
 			// 回滚
