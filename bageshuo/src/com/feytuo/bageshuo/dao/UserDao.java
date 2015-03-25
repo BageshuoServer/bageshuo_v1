@@ -254,4 +254,29 @@ public class UserDao {
 		}
 		return isUpdate;
 	}
+	
+	/**
+	 * 根据用户的id和device_id判断用户是否在数据库里面
+	 * @param u_id  
+	 * @param device_id
+	 * @return
+	 * @throws Exception 
+	 */
+	public boolean queryUserByUidAndDeviceId(int u_id,String device_id) throws Exception{
+		boolean isUserExist = false;
+		String sql = "select * from user where u_id=? and device_id =? ";
+		Object[] params = new Object[]{u_id,device_id};
+		QueryRunner runner = new QueryRunner();
+		try {
+			Object query = runner.query(conn, sql,params ,
+					new BeanHandler(User.class));
+			if (query != null) {
+				isUserExist = true;
+			}
+			return isUserExist;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 }
