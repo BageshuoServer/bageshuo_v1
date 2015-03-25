@@ -12,6 +12,12 @@ import com.feytuo.bageshuo.service.UserService;
 
 public class NormalLoginServlet extends HttpServlet {
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6168366605392608616L;
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");

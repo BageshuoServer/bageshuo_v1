@@ -21,7 +21,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    666666page. <br>
-    <a href="servlet/GetInfo">跳转测试</a>
+    <h1>八哥说url测试</h1>
+    <hr>
+    <h3>用户模块：</h3>
+    <p>用户注册：http://localhost:8080/bageshuo/user/Register?u_name=13874787877&u_pwd=hand&u_type=normal&device_id=DFD8D7FUFD8DFID9&u_push_id=38D88F8D9CK</p>
+  	<p>普通登录：http://localhost:8080/bageshuo/user/NormalLogin?u_name=13874787877&u_pwd=hand&u_type=normal&device_id=DFD8D7FUFD8DFID9&u_push_id=38D88F8D9CK</p>
+  	<p>第三方登录：</p>
+  	<p>忘记密码：http://localhost:8080/bageshuo/user/UpdatePwd?u_name=13874787877&device_id=DFD8D7FUFD8DFID9&u_pwd=newhand</p>
+  	<a href="upload.jsp">设置用户信息</a>
+  
   </body>
 </html>

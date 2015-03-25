@@ -1,11 +1,5 @@
 package com.feytuo.bageshuo.service;
 
-import java.io.FileNotFoundException;
-
-import org.apache.commons.fileupload.FileItem;
-
-import com.aliyun.oss.OSSClient;
-import com.feytuo.bageshuo.aliyun.AliYunUpload;
 import com.feytuo.bageshuo.dao.UserDao;
 import com.feytuo.bageshuo.domian.User;
 
@@ -24,19 +18,19 @@ public class UserService {
 	 *            产生的用户
 	 */
 
-	private static String accessKeyId;
-	private static String accessKeySecret;
-	private static String endpoint;
-	private static String bucket;
-	private static OSSClient client;
-	static {
-		accessKeyId = "UctImVM65WFfyWhU";
-		accessKeySecret = "1i4ky4qL3FtoVH8qaka22B1roGxz5T";
-		// 以杭州为例
-		endpoint = "http://oss-cn-qingdao.aliyuncs.com";
-		bucket = "bageshuo";
-		client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-	}
+//	private static String accessKeyId;
+//	private static String accessKeySecret;
+//	private static String endpoint;
+//	private static String bucket;
+//	private static OSSClient client;
+//	static {
+//		accessKeyId = "UctImVM65WFfyWhU";
+//		accessKeySecret = "1i4ky4qL3FtoVH8qaka22B1roGxz5T";
+//		// 以杭州为例
+//		endpoint = "http://oss-cn-qingdao.aliyuncs.com";
+//		bucket = "bageshuo";
+//		client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+//	}
 
 	UserDao userDao = new UserDao();
 

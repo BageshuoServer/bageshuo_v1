@@ -2,7 +2,6 @@ package com.feytuo.bageshuo.servlet.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +15,13 @@ import com.feytuo.bageshuo.domian.User;
 import com.feytuo.bageshuo.service.UserService;
 
 public class UserRegisterServlet extends HttpServlet {
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2838920136507493399L;
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		this.doPost(request, response);
@@ -36,6 +42,7 @@ public class UserRegisterServlet extends HttpServlet {
 
 		System.out.println("u_push_id:" + u_push_id);
 		System.out.println("u_type:" + u_type);
+		System.out.println("device_id:" + device_id);
 
 		String u_nick = "昵称";
 		String u_bage = "123456";
