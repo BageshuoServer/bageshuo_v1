@@ -26,6 +26,16 @@
     <servlet-name>ThreeLoginServlet</servlet-name>
     <servlet-class>com.feytuo.bageshuo.servlet.user.ThreeLoginServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>GetCommunityListServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.community.GetCommunityListServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>GetCommunityInfoServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.community.GetCommunityInfoServlet</servlet-class>
+  </servlet>
+
+
 
 
 
@@ -51,6 +61,14 @@
   <servlet-mapping>
     <servlet-name>ThreeLoginServlet</servlet-name>
     <url-pattern>/user/ThreeLogin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetCommunityListServlet</servlet-name>
+    <url-pattern>/community/GetCommunityList</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetCommunityInfoServlet</servlet-name>
+    <url-pattern>/community/GetCommunityInfo</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

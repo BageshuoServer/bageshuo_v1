@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50704
 File Encoding         : 65001
 
-Date: 2015-03-22 11:07:21
+Date: 2015-03-25 11:25:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,10 +21,10 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `answer`;
 CREATE TABLE `answer` (
   `an_id` int(11) NOT NULL AUTO_INCREMENT,
-  `an_location` varchar(10) NOT NULL,
+  `an_location` varchar(255) NOT NULL,
   `an_time` datetime NOT NULL,
-  `an_word` varchar(10) DEFAULT NULL,
-  `an_voice` varchar(10) DEFAULT NULL,
+  `an_word` text,
+  `an_voice` varchar(255) DEFAULT NULL,
   `an_praise_num` int(11) NOT NULL DEFAULT '0',
   `u_id` int(11) NOT NULL,
   `pr_id` int(11) NOT NULL,
@@ -45,10 +45,10 @@ CREATE TABLE `answer` (
 DROP TABLE IF EXISTS `carousel`;
 CREATE TABLE `carousel` (
   `ca_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ca_theme` varchar(10) NOT NULL,
-  `ca_pic` varchar(10) NOT NULL,
+  `ca_theme` varchar(255) NOT NULL,
+  `ca_pic` varchar(255) NOT NULL,
   `ca_time` datetime NOT NULL,
-  `ca_content` varchar(10) NOT NULL,
+  `ca_content` varchar(255) NOT NULL,
   `ca_share_num` int(11) NOT NULL DEFAULT '0',
   `ca_praise_num` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ca_id`)
@@ -64,10 +64,10 @@ CREATE TABLE `carousel` (
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `com_id` int(11) NOT NULL AUTO_INCREMENT,
-  `com_location` varchar(10) NOT NULL,
+  `com_location` varchar(255) NOT NULL,
   `com_time` datetime NOT NULL,
-  `com_word` varchar(10) DEFAULT NULL,
-  `com_voice` varchar(10) DEFAULT NULL,
+  `com_word` text,
+  `com_voice` varchar(255) DEFAULT NULL,
   `u_id` int(11) NOT NULL,
   `inv_id` int(11) NOT NULL,
   PRIMARY KEY (`com_id`),
@@ -87,10 +87,10 @@ CREATE TABLE `comment` (
 DROP TABLE IF EXISTS `community`;
 CREATE TABLE `community` (
   `co_id` int(11) NOT NULL AUTO_INCREMENT,
-  `co_name` varchar(10) NOT NULL,
-  `co_title` varchar(10) DEFAULT NULL,
-  `co_head` varchar(10) DEFAULT NULL,
-  `co_intro` varchar(10) DEFAULT NULL,
+  `co_name` varchar(255) NOT NULL,
+  `co_title` varchar(255) DEFAULT NULL,
+  `co_head` varchar(255) DEFAULT NULL,
+  `co_intro` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`co_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -113,13 +113,11 @@ CREATE TABLE `community_user` (
   KEY `cu_uid` (`u_id`),
   CONSTRAINT `community_user_ibfk_1` FOREIGN KEY (`co_id`) REFERENCES `community` (`co_id`),
   CONSTRAINT `community_user_ibfk_2` FOREIGN KEY (`u_id`) REFERENCES `user` (`u_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of community_user
 -- ----------------------------
-INSERT INTO `community_user` VALUES ('2', '1', '3');
-INSERT INTO `community_user` VALUES ('4', '2', '3');
 
 -- ----------------------------
 -- Table structure for `invitation`
@@ -127,10 +125,10 @@ INSERT INTO `community_user` VALUES ('4', '2', '3');
 DROP TABLE IF EXISTS `invitation`;
 CREATE TABLE `invitation` (
   `inv_id` int(11) NOT NULL AUTO_INCREMENT,
-  `inv_location` varchar(10) NOT NULL,
+  `inv_location` varchar(255) NOT NULL,
   `inv_time` datetime NOT NULL,
-  `inv_word` varchar(10) DEFAULT NULL,
-  `inv_voice` varchar(10) DEFAULT NULL,
+  `inv_word` text,
+  `inv_voice` varchar(255) DEFAULT NULL,
   `inv_share_num` int(11) NOT NULL DEFAULT '0',
   `inv_praise_num` int(11) NOT NULL DEFAULT '0',
   `inv_top` int(11) NOT NULL DEFAULT '0',
@@ -154,11 +152,11 @@ CREATE TABLE `invitation` (
 DROP TABLE IF EXISTS `problem`;
 CREATE TABLE `problem` (
   `pr_id` int(11) NOT NULL AUTO_INCREMENT,
-  `pr_location` varchar(10) NOT NULL,
+  `pr_location` varchar(255) NOT NULL,
   `pr_time` datetime NOT NULL,
-  `pr_word` varchar(10) NOT NULL,
-  `pr_voice` varchar(10) DEFAULT NULL,
-  `pr_native` varchar(10) NOT NULL,
+  `pr_word` text NOT NULL,
+  `pr_voice` varchar(255) DEFAULT NULL,
+  `pr_native` varchar(255) NOT NULL,
   `pr_share_num` int(11) NOT NULL DEFAULT '0',
   `pr_praise_num` int(11) NOT NULL DEFAULT '0',
   `u_id` int(11) NOT NULL,
@@ -176,25 +174,16 @@ CREATE TABLE `problem` (
 -- ----------------------------
 DROP TABLE IF EXISTS `testuser`;
 CREATE TABLE `testuser` (
-  `name` varchar(10) NOT NULL,
-  `password` varchar(10) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of testuser
 -- ----------------------------
-INSERT INTO `testuser` VALUES ('ttt', 'aaa', '1');
-INSERT INTO `testuser` VALUES ('ttt', 'aaa', '2');
 INSERT INTO `testuser` VALUES ('ttt', 'aaa', '3');
-INSERT INTO `testuser` VALUES ('ttt', 'aaa', '4');
-INSERT INTO `testuser` VALUES ('ttt', 'aaa', '5');
-INSERT INTO `testuser` VALUES ('ttt', 'aaa', '6');
-INSERT INTO `testuser` VALUES ('ttt', 'aaa', '7');
-INSERT INTO `testuser` VALUES ('ttt', 'aaa', '8');
-INSERT INTO `testuser` VALUES ('ttt', 'aaa', '9');
-INSERT INTO `testuser` VALUES ('ttt', 'aaa', '10');
 
 -- ----------------------------
 -- Table structure for `topic`
@@ -202,10 +191,10 @@ INSERT INTO `testuser` VALUES ('ttt', 'aaa', '10');
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE `topic` (
   `to_id` int(11) NOT NULL AUTO_INCREMENT,
-  `to_theme` varchar(10) NOT NULL,
-  `to_pic` varchar(10) NOT NULL,
+  `to_theme` varchar(255) NOT NULL,
+  `to_pic` varchar(255) NOT NULL,
   `to_time` datetime NOT NULL,
-  `to_content` varchar(10) NOT NULL,
+  `to_content` varchar(255) NOT NULL,
   `to_share_num` int(11) NOT NULL DEFAULT '0',
   `to_praise_num` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`to_id`)
@@ -221,10 +210,10 @@ CREATE TABLE `topic` (
 DROP TABLE IF EXISTS `topic_comment`;
 CREATE TABLE `topic_comment` (
   `to_com_id` int(11) NOT NULL AUTO_INCREMENT,
-  `to_com_location` varchar(10) NOT NULL,
+  `to_com_location` varchar(255) NOT NULL,
   `to_com_time` datetime NOT NULL,
-  `to_com_word` varchar(10) DEFAULT NULL,
-  `to_com_voice` varchar(10) DEFAULT NULL,
+  `to_com_word` text,
+  `to_com_voice` varchar(255) DEFAULT NULL,
   `u_id` int(11) NOT NULL,
   `to_id` int(11) NOT NULL,
   PRIMARY KEY (`to_com_id`),
@@ -244,21 +233,20 @@ CREATE TABLE `topic_comment` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `u_id` int(11) NOT NULL AUTO_INCREMENT,
-  `u_name` varchar(10) NOT NULL,
-  `u_pwd` varchar(10) NOT NULL,
-  `u_head` varchar(10) DEFAULT NULL,
-  `u_nick` varchar(10) NOT NULL,
-  `u_bage` varchar(10) NOT NULL,
-  `u_sex` varchar(10) NOT NULL,
-  `u_home` varchar(10) NOT NULL,
-  `u_sign` varchar(10) DEFAULT NULL,
-  `u_push_id` varchar(10) NOT NULL,
-  `u_type` varchar(10) NOT NULL,
+  `u_name` varchar(255) NOT NULL,
+  `u_pwd` varchar(255) NOT NULL,
+  `u_head` varchar(255) DEFAULT NULL,
+  `u_nick` varchar(255) NOT NULL,
+  `u_bage` varchar(255) NOT NULL,
+  `u_sex` varchar(255) NOT NULL,
+  `u_home` varchar(255) NOT NULL,
+  `u_sign` varchar(255) DEFAULT NULL,
+  `u_push_id` varchar(255) NOT NULL,
+  `u_type` varchar(255) NOT NULL,
   `device_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`u_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('3', 'ee', 'ee', 'e', 'e', 'e', 'e', 'e', 'e', 'e', '', null);
