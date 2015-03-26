@@ -1,12 +1,11 @@
 package com.feytuo.bageshuo.util;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-//JDBC�����ࣺ�ر�����ȡ������
+//JDBC事务处理机制
 public final class JdbcUtil {
 	private static ComboPooledDataSource dataSource;
 	static{
@@ -29,7 +28,7 @@ public final class JdbcUtil {
 			}
 		}
 	}
-	//事务开始
+	//事务执行
 	public static void commitTransaction(Connection conn){
 		if(conn!=null) {
 			try {

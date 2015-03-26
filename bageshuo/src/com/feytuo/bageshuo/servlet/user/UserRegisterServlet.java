@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.feytuo.bageshuo.domian.User;
 import com.feytuo.bageshuo.service.UserService;
 
 public class UserRegisterServlet extends HttpServlet {
@@ -44,22 +43,6 @@ public class UserRegisterServlet extends HttpServlet {
 		System.out.println("u_type:" + u_type);
 		System.out.println("device_id:" + device_id);
 
-		String u_nick = "昵称";
-		String u_bage = "123456";
-		String u_sex = "女";
-		String u_home = "长沙";
-
-		User user = new User();
-		user.setU_name(u_name);
-		user.setU_pwd(u_pwd);
-		user.setU_type(u_type);
-		user.setDevice_id(device_id);
-		user.setU_push_id(u_push_id);
-		user.setU_nick(u_nick);
-		user.setU_bage(u_bage);
-		user.setU_sex(u_sex);
-		user.setU_home(u_home);
-
 		// 封装成json对象
 		JSONObject obj = new JSONObject();
 
@@ -69,7 +52,7 @@ public class UserRegisterServlet extends HttpServlet {
 		int code = 0;
 		String msg;
 		try {
-			int isSuccess = userService.userRegister(user);
+			int isSuccess = userService.userRegister(u_name, u_pwd, u_type, device_id, u_push_id);
 			if (isSuccess > 0) {
 				code = 100;
 				u_id = isSuccess;

@@ -3,10 +3,12 @@ package com.feytuo.bageshuo.servlet.user;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.ProgressListener;
@@ -14,7 +16,6 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.JSONObject;
 
-import com.aliyun.oss.OSSClient;
 import com.feytuo.bageshuo.aliyun.AliYunUpload;
 import com.feytuo.bageshuo.service.UserService;
 
