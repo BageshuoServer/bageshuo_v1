@@ -411,4 +411,27 @@ public class UserDao {
 			throw e;
 		}
 	}
+	
+	/**
+	 * 根据用户的id查找对应的用户对象
+	 * @param u_id 用户id
+	 * @return 用户对象
+	 * @throws Exception
+	 */
+	public User queryUserByUid(int u_id) throws Exception{
+		User user= new User();
+		String sql = "select * from user where u_id=?";
+		QueryRunner runner = new QueryRunner();
+		try {
+			Object query = runner.query(conn, sql, u_id, new BeanHandler(
+					User.class));
+			if (query != null) {
+				user = (User)query;
+			}
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 }

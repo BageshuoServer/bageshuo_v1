@@ -16,7 +16,7 @@ import com.feytuo.bageshuo.domian.Invitation;
 import com.feytuo.bageshuo.util.JdbcUtil;
 
 /**
- * ���ӱ����
+ * 帖子表数据库操作
  * @author Tms
  *
  */
@@ -52,5 +52,24 @@ public class InvitationDao {
 			throw e;
 		}
 		return invitationList;
+	}
+	
+	/**
+	 * 根据co_id获得对应社区的置顶帖，并且是通过时间进行排序的 
+	 * @param co_id 社区ID
+	 * @return 进过时间排序的置顶帖的列表
+	 * @throws Exception
+	 */
+	public List<Invitation> queryTopInvationListByCoIdOrderByInvTime(int co_id) throws Exception{
+		List<Invitation> topInvationList = new ArrayList<Invitation>();
+		String sql = "select * from invitation where inv_top = 1 and co_id=? ORDER BY inv_time DESC";
+		QueryRunner runner = new QueryRunner();
+		try {
+			topInvationList  = (List<Invitation>) runner.query(conn, sql, co_id, new BeanListHandler(Invitation.class));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return topInvationList;
 	}
 }

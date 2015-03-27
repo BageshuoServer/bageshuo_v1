@@ -5,13 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.feytuo.bageshuo.dao.CommentDao;
 import com.feytuo.bageshuo.dao.CommunityDao;
 import com.feytuo.bageshuo.dao.CommunityUserDao;
 import com.feytuo.bageshuo.dao.InvitationDao;
 import com.feytuo.bageshuo.dao.UserDao;
+import com.feytuo.bageshuo.domian.Comment;
 import com.feytuo.bageshuo.domian.Community;
 import com.feytuo.bageshuo.domian.CommunityUser;
 import com.feytuo.bageshuo.domian.Invitation;
+import com.feytuo.bageshuo.domian.User;
 import com.feytuo.bageshuo.otherentry.UserCommunityInfo;
 
 /**
@@ -31,6 +34,7 @@ public class CommunityService {
 	CommunityUserDao communityUserDao = new CommunityUserDao();
 	InvitationDao invitationDao = new InvitationDao();
 	CommunityDao communityDao = new CommunityDao();
+	CommentDao commentDao = new CommentDao();
 	
     public List<UserCommunityInfo> getUserCommunityInfo(int u_id,String device_id) throws Exception{
     	List<CommunityUser> communityUserList = new ArrayList<CommunityUser>(); 
@@ -103,17 +107,73 @@ public class CommunityService {
     	return perCommunityInfoMap;
     }
     
-//    public static void main(String[] args) throws Exception {
-//    	CommunityService service = new CommunityService();
-//    	Map<String,Object> perCommunityInfoMap = service.perCommunityInfo(23, 3, "333");
-//    	int interest_num = (Integer) perCommunityInfoMap.get("co_interest_num");
-//    	int inv_num = (Integer) perCommunityInfoMap.get("co_inv_num");
-//    	Community community = (Community) perCommunityInfoMap.get("community");
-//    	System.out.println(interest_num);
-//    	System.out.println("-------------------");
-//    	System.out.println(inv_num);
-//    	System.out.println("-------------------");
-//    	System.out.println(community.getCo_name());
-//    	
-//	}
+    /**
+     * 根据用户的u_id，device_id和co_id获取置顶帖的信息
+     * @param u_id
+     * @param device_id
+     * @param co_id
+     * @return
+     * @throws Exception 
+     */
+    public List<HashMap<String, Object>> getTopInvationInfoList(int u_id,String device_id,int co_id) throws Exception { 
+    	 List<HashMap<String, Object>> topInvationInfoList  = new ArrayList<HashMap<String,Object>>();
+    	 List<Invitation> topInvationList = new ArrayList<Invitation>();
+    	 try {
+			boolean isExits = userdao.queryUserByUidAndDeviceId(u_id, device_id);
+			if(isExits) {
+				//根据co_id获得置顶帖子数（已经按时间的先后顺序排好了顺序）
+				topInvationList = invitationDao.queryTopInvationListByCoIdOrderByInvTime(co_id);
+				if(!topInvationList.isEmpty()) {
+					//初始化评论数目
+					int topInvitationNum = 0;
+					//初始化发帖人
+					User user= new User();
+					for(Invitation invitation :topInvationList) {
+						topInvitationNum = commentDao.queryCommentNumListByInvId(invitation.getInv_id());
+						user =userdao.queryUserByUid(invitation.getU_id());
+						HashMap<String, Object> map = new HashMap<String, Object>();
+						map.put("invitation",invitation );
+						map.put("topInvitationNum", topInvitationNum);
+						map.put("user", user);
+						topInvationInfoList.add(map);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	 return topInvationInfoList;
+    }
+    
+    /**
+     * 用户是否关注成功
+     * @param u_id 用户ID
+     * @param co_id  社区ID
+     * @param device_id 设备ID
+     * @return
+     * @throws Exception 
+     */
+    public boolean interestCo(int u_id,int co_id,String device_id) throws Exception {
+    	boolean interestSuccess = false;
+    	try {
+			boolean isExsit  = userdao.queryUserByUidAndDeviceId(u_id, device_id);
+			if(isExsit) {
+				//判断用户是否已经关注这个社区
+				boolean isAleadlyInterest = communityUserDao.queryUserIsInerest(u_id, co_id);
+				if(isAleadlyInterest){
+					//如果关注则赋值关注成功
+					interestSuccess = true;
+				}else {
+					//用户还没关注，则向中间表中插入数据
+					interestSuccess = communityUserDao.insertIntoComminityUser(u_id, co_id);
+					return interestSuccess;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	return interestSuccess;
+    }
 }

@@ -34,6 +34,21 @@
     <servlet-name>GetCommunityInfoServlet</servlet-name>
     <servlet-class>com.feytuo.bageshuo.servlet.community.GetCommunityInfoServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>GetTopInvServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.community.GetTopInvServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>InterestCoServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.community.InterestCoServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CancelInterestCoServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.community.CancelInterestCoServlet</servlet-class>
+  </servlet>
+
+
+
 
 
 
@@ -69,6 +84,18 @@
   <servlet-mapping>
     <servlet-name>GetCommunityInfoServlet</servlet-name>
     <url-pattern>/community/GetCommunityInfo</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetTopInvServlet</servlet-name>
+    <url-pattern>/community/GetTopInv</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>InterestCoServlet</servlet-name>
+    <url-pattern>/community/InterestCo</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CancelInterestCoServlet</servlet-name>
+    <url-pattern>/community/CancelInterestCo</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
