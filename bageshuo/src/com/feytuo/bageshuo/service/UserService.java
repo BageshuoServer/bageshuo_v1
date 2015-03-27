@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.feytuo.bageshuo.dao.UserDao;
 import com.feytuo.bageshuo.domian.User;
+import com.feytuo.bageshuo.util.huanxin.EasemobIMUsers;
 
 /**
  * 用户操作service
@@ -18,24 +19,43 @@ public class UserService {
 	/**
 	 * 用户注册
 	 * 
-	 * @param user
-	 *            产生的用户
+	 * @param user 产生的用户
+	 * @return 
+	 * -1用户已存在，
+	 * -2八哥号创建失败
+	 * -3环信创建失败
+	 * 大于0成功返回u_id
 	 */
 	public int userRegister(String u_name, String u_pwd, String u_type,
 			String device_id, String u_push_id) throws Exception {
 		boolean isExist = userDao.queryUserByUName(u_name);
-		if (isExist) {
-			return -1;
-		} else {
-			int u_id = 0;
+		int u_id = 0;
+		int isSuccess = 0;
+		if (isExist) {//用户已存在
+			isSuccess = -1;
+		} else {//用户不存在，保存用户信息
 			u_id = userDao.saveUser(getUser(u_name, u_pwd, u_type, device_id, u_push_id));
-			if(buildBage(u_id)){//八哥号创建并更新成功
-				return u_id;
-			}else{//创建失败
-				userDao.deleteUserByUid(u_id);
-				return -1;
+			isSuccess = u_id;
+			if(!buildBage(u_id)){//八哥号创建失败
+				isSuccess = -2;
 			}
 		}
+		//用户不存，保存用户信息成功并且八哥号创建成功
+		//注册环信服务器并登录
+		if(isSuccess > 0 && !isExist){
+			int code = EasemobIMUsers.registerHX(u_name, u_pwd);
+			if(code == 200){
+				EasemobIMUsers.loginHX(u_name, u_pwd);
+			}else{
+				isSuccess = -3;
+			}
+		}
+		
+		//如果八哥号创建失败或者环信注册失败
+		if(isSuccess == -2 || isSuccess == -3){
+			userDao.deleteUserByUid(u_id);
+		}
+		return isSuccess;
 	}
 
 	/**
@@ -67,9 +87,9 @@ public class UserService {
 	/**
 	 * 根据用户名修改密码和设备的ID
 	 * 
-	 * @param u_name
-	 * @param u_pwd
-	 * @param device_id
+	 * @param u_name 用户名
+	 * @param u_pwd 用户新密码
+	 * @param device_id 设备id
 	 * @return 是否修改成功
 	 * @throws Exception
 	 */
@@ -78,8 +98,13 @@ public class UserService {
 		boolean isUpdatePwdSuccess = false;
 		boolean isExist = userDao.queryUserIsExistByUname(u_name);
 		if (isExist) {
-			isUpdatePwdSuccess = userDao.updatePwdAndDeviceID(u_pwd, device_id,
-					u_name);
+			//修改环信密码
+			int code = EasemobIMUsers.modifyPwdHX(u_name, u_pwd);
+			if(code == 200){
+				//修改服务器密码
+				isUpdatePwdSuccess = userDao.updatePwdAndDeviceID(u_pwd, device_id,
+						u_name);
+			}
 		}
 		return isUpdatePwdSuccess;
 	}
@@ -114,25 +139,51 @@ public class UserService {
 	 * @param u_type 登录方式
 	 * @param device_id 设备id
 	 * @param u_push_id clientid
-	 * @return 登录成功返回uid，不成功返回0
+	 * @return 
+	 * -2八哥号创建失败
+	 * -3环信创建失败
+	 * 大于0成功返回u_id
 	 */
 	public int threeLogin(String u_name, String u_pwd, String u_type,
 			String device_id, String u_push_id) throws Exception{
 		int uId = 0;
+		int isSuccess = 0;
 		//判断用户是否存在
 		boolean isExist = userDao.queryUserByUName(u_name);
 		if(isExist){//存在，更新数据
 			boolean isUpdate = userDao.updateTypeDeviceIDPushID(u_type, device_id, u_push_id, u_name);
 			if(isUpdate){
 				uId = userDao.queryUidByUname(u_name);
+				isSuccess = uId;
 			}
 		}else{//不存在，新用户，保存数据
 			uId = userDao.saveUser(getUser(u_name, u_pwd, u_type, device_id, u_push_id));
+			isSuccess = uId;
 			if(!buildBage(uId)){//新用户使用第三方登录，需要生成八哥号
-				uId = 0;//生成不成功，则登录失败
+				isSuccess = -2;//生成不成功，则登录失败
 			}
 		}
-		return uId;
+		
+		//用户不存，保存用户信息成功并且八哥号创建成功
+		//注册环信服务器并登录
+		if(!isExist){
+			if(isSuccess > 0){
+				int code =  EasemobIMUsers.registerHX(u_name, u_pwd);
+				if(code == 200){//注册环信成功
+					EasemobIMUsers.loginHX(u_name, u_pwd);
+				}else{//注册环信失败
+					isSuccess = -3;
+				}
+			}
+		}else{
+			EasemobIMUsers.loginHX(u_name, u_pwd);
+		}
+		
+		//如果八哥号创建失败或者环信注册失败
+		if(isSuccess == -2 || isSuccess == -3){
+			userDao.deleteUserByUid(uId);
+		}
+		return isSuccess;
 	}
 	
 	/**

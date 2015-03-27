@@ -364,7 +364,7 @@ public class UserDao {
 	 * @throws SQLException
 	 */
 	public void deleteUserByUid(int u_id) throws SQLException {
-		String sql = "delete * from user where u_id=?";
+		String sql = "delete from user where u_id=?";
 		QueryRunner runner = new QueryRunner();
 		Object[] params = new Object[] { u_id };
 		try {
@@ -377,6 +377,7 @@ public class UserDao {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			JdbcUtil.rollbackTransaction(conn);// 更新失败回滚
 		}
 	}

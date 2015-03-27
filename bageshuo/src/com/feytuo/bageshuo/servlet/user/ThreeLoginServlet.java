@@ -44,6 +44,12 @@ public class ThreeLoginServlet extends HttpServlet {
 			if(isLoginSuccess > 0){//返回大于0（uid）
 				code = 100;
 				msg = "登录成功";
+			}else if(isLoginSuccess == -2){
+				code = 101;
+				msg = "登录失败，八哥号创建失败";
+			}else if(isLoginSuccess == -3){
+				code = 101;
+				msg = "登录失败，环信注册失败";
 			}else{
 				code = 101;
 				msg = "登录失败";
@@ -51,7 +57,7 @@ public class ThreeLoginServlet extends HttpServlet {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			code = 101;
-			msg = "登录失败";
+			msg = "登录失败，服务器问题";
 			e.printStackTrace();
 		}
 		

@@ -57,14 +57,23 @@ public class UserRegisterServlet extends HttpServlet {
 				code = 100;
 				u_id = isSuccess;
 				msg = "注册成功";
-			} else {
+			} else if(isSuccess == -1){
 				code = 101;
-				msg = "用户已存在";
+				msg = "用户已注册";
+			}else if(isSuccess == -2){
+				code = 101;
+				msg = "注册失败，八哥号生成失败";
+			}else if(isSuccess == -3){
+				code = 101;
+				msg = "注册失败，环信注册失败";
+			}else{
+				code = 101;
+				msg = "注册失败";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			code = 101;
-			msg = "注册失败";
+			msg = "注册失败，服务器异常";
 		}
 
 		try {
