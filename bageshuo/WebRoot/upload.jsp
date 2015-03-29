@@ -8,15 +8,14 @@
   
 <body>  
   
-    <form action="user/SetUserInfo"
+    <form action="community/PublishComment"
         method="post" enctype="multipart/form-data">  
-             id：<input type="text" name="u_id" value="7" /><p>
-             decice_id<input type="text" name="device_id" value="DFD8D7FUFD8DFID9"/><p>
-             u_nick:<input type="text" name="u_nick" value="丁神带你飞"/><p>
-             u_sex:<input type="text" name="u_sex" value="爷们"/><p>
-             u_home:<input type="text" name="u_home" value="湘潭"/><p>
-             u_sign:<input type="text" name="u_sign" value="带你装X，带你飞"/><p>
-             u_head:<input type="file" name="u_head"/><p> 
+             u_id：<input type="text" name="u_id" /><p>
+             decice_id<input type="text" name="device_id"/><p>
+             inv_id:<input type="text" name="inv_id" /><p>
+             com_location:<input type="text" name="com_location" /><p>
+             com_word:<input type="text" name="com_word" /><p>
+             com_voice:<input type="file" name="com_voice"/><p> 
              <input type="submit" value="提交"/> 
     </form>  
 </body>  

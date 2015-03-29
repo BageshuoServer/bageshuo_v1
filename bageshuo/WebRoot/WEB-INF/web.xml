@@ -46,6 +46,21 @@
     <servlet-name>CancelInterestCoServlet</servlet-name>
     <servlet-class>com.feytuo.bageshuo.servlet.community.CancelInterestCoServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>PublishInvServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.community.PublishInvServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>GetCarouselListServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.community.GetCarouselListServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>PublishCommentServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.community.PublishCommentServlet</servlet-class>
+  </servlet>
+
+
+
 
 
 
@@ -96,6 +111,18 @@
   <servlet-mapping>
     <servlet-name>CancelInterestCoServlet</servlet-name>
     <url-pattern>/community/CancelInterestCo</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PublishInvServlet</servlet-name>
+    <url-pattern>/community/PublishInv</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetCarouselListServlet</servlet-name>
+    <url-pattern>/community/GetCarouselList</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PublishCommentServlet</servlet-name>
+    <url-pattern>/community/PublishComment</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
