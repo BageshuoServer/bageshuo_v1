@@ -61,6 +61,7 @@ public class UserDao {
 		} catch (Exception e) {
 			// 回滚
 			JdbcUtil.rollbackTransaction(conn);
+			e.printStackTrace();
 			throw e;
 		}
 		return uId;
@@ -254,6 +255,7 @@ public class UserDao {
 		} catch (Exception e) {
 			// 回滚
 			JdbcUtil.rollbackTransaction(conn);
+			e.printStackTrace();
 			throw e;
 		}
 		return isUpdate;

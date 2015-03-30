@@ -55,7 +55,7 @@ public class AliYunUpload {
 
 	    // 必须设置ContentLength
 	    meta.setContentLength(fileItem.getSize());
-	    meta.setContentType("image/jpeg");
+//	    meta.setContentType("image/jpeg");
 	    int index = fileItem.getName().lastIndexOf(".");
 	    String keyFooter = fileItem.getName().substring(index);
 	    System.out.println(keyFooter);

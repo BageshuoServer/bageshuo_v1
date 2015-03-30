@@ -94,11 +94,6 @@ CREATE TABLE `community` (
   PRIMARY KEY (`co_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of community
--- ----------------------------
-INSERT INTO `community` VALUES ('1', '222', 'a', 'a', 'a');
-INSERT INTO `community` VALUES ('2', '333', 'b', 'b', 'b');
 
 -- ----------------------------
 -- Table structure for `community_user`

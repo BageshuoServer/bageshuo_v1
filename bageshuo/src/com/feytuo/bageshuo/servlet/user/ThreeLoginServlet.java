@@ -42,8 +42,13 @@ public class ThreeLoginServlet extends HttpServlet {
 		try {
 			isLoginSuccess = userService.threeLogin(u_name, u_pwd, u_type, device_id, u_push_id);
 			if(isLoginSuccess > 0){//返回大于0（uid）
-				code = 100;
-				msg = "登录成功";
+				if(userService.isThreeLoginExist()){
+					code = 99;
+					msg = "登录成功,老用户";
+				}else{
+					code = 100;
+					msg = "登录成功,新用户";
+				}
 			}else if(isLoginSuccess == -2){
 				code = 101;
 				msg = "登录失败，八哥号创建失败";
@@ -65,7 +70,7 @@ public class ThreeLoginServlet extends HttpServlet {
 		JSONObject jObject = new JSONObject();
 		try {
 			jObject.put("code", code);
-			if(code == 100){
+			if(code == 100 || code == 99){
 				JSONObject dataObject = new JSONObject();
 				dataObject.put("u_id", isLoginSuccess);
 				jObject.put("data",dataObject);

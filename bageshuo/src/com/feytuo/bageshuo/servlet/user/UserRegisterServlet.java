@@ -33,6 +33,7 @@ public class UserRegisterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=UTF-8"); // 设置Content-Type字段值
 		String u_name = request.getParameter("u_name");
 		String u_pwd = request.getParameter("u_pwd");
 		String u_type = request.getParameter("u_type");

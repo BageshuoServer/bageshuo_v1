@@ -29,17 +29,22 @@ public class UpdatePwdServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		int code = 0;
 		String msg;
-
+		int uId = 0;
 		try {
-			boolean isUpdatePwdSuccessservice = service.updatePwd(u_name,
+			uId = service.updatePwd(u_name,
 					u_pwd, device_id);
-			if (isUpdatePwdSuccessservice) {
+			if (uId > 0) {
 				code = 100;
 				msg = "修改成功";
 			} else {
 				code = 101;
 				msg = "修改失败";
 			}
+			 if(code==100) {
+				 JSONObject objData = new JSONObject();
+				 objData.put("u_id", uId);
+				 obj.put("data", objData);
+			 }
 			obj.put("code", code);
 			obj.put("msg", msg);
 			writer.print(obj);

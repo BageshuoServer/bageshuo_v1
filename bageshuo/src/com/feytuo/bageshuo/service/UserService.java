@@ -93,20 +93,23 @@ public class UserService {
 	 * @return 是否修改成功
 	 * @throws Exception
 	 */
-	public boolean updatePwd(String u_name, String u_pwd, String device_id)
+	public int updatePwd(String u_name, String u_pwd, String device_id)
 			throws Exception {
-		boolean isUpdatePwdSuccess = false;
+		int uId = 0;
 		boolean isExist = userDao.queryUserIsExistByUname(u_name);
 		if (isExist) {
 			//修改环信密码
 			int code = EasemobIMUsers.modifyPwdHX(u_name, u_pwd);
 			if(code == 200){
 				//修改服务器密码
-				isUpdatePwdSuccess = userDao.updatePwdAndDeviceID(u_pwd, device_id,
+				boolean isUpdate = userDao.updatePwdAndDeviceID(u_pwd, device_id,
 						u_name);
+				if(isUpdate){
+					uId = userDao.queryUidByUname(u_name);
+				}
 			}
 		}
-		return isUpdatePwdSuccess;
+		return uId;
 	}
 
 	/**
@@ -155,6 +158,7 @@ public class UserService {
 			if(isUpdate){
 				uId = userDao.queryUidByUname(u_name);
 				isSuccess = uId;
+				setThreeLoginExist(true);
 			}
 		}else{//不存在，新用户，保存数据
 			uId = userDao.saveUser(getUser(u_name, u_pwd, u_type, device_id, u_push_id));
@@ -185,7 +189,16 @@ public class UserService {
 		}
 		return isSuccess;
 	}
+	private boolean isThreeLoginExist = false;
 	
+	public boolean isThreeLoginExist() {
+		return isThreeLoginExist;
+	}
+
+	public void setThreeLoginExist(boolean isThreeLoginExist) {
+		this.isThreeLoginExist = isThreeLoginExist;
+	}
+
 	/**
 	 * 根据用户信息构造User类
 	 * @param u_name

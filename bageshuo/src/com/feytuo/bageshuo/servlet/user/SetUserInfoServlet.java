@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -37,10 +38,13 @@ public class SetUserInfoServlet extends HttpServlet {
 
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=UTF-8"); // 设置Content-Type字段值
 
 		if (ServletFileUpload.isMultipartContent(request)) {
-			// 创建 DiskFileItemFactory工厂 对象
-			DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
+//			// 创建 DiskFileItemFactory工厂 对象
+//			DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
+			// 建立FileItemFactory对象
+			FileItemFactory diskFileItemFactory = new DiskFileItemFactory(); 
 			// 创建DiskFileItemFactory的解析器对象
 			ServletFileUpload fileUpload = new ServletFileUpload(
 					diskFileItemFactory);
@@ -72,6 +76,7 @@ public class SetUserInfoServlet extends HttpServlet {
 			try {
 				// 解析request请求
 				List<FileItem> fileItems = fileUpload.parseRequest(request);
+				System.out.println("items个数："+fileItems.size());
 				// fileItem 对应<input type="file" name="upload" id="upfile" />
 				// fileItem <input type="text" name="user" />
 				// 遍历操作
@@ -107,6 +112,7 @@ public class SetUserInfoServlet extends HttpServlet {
 							System.out.println("u_sign==" + u_sign);
 						}
 					} else {
+						System.out.println("正在上传阿里云");
 						AliYunUpload upload = new AliYunUpload();
 						upload.createBucket();
 						u_head = upload.putObject(fileItem, "userHead");
@@ -114,6 +120,7 @@ public class SetUserInfoServlet extends HttpServlet {
 					}
 				}
 			} catch (FileUploadException e) {
+				System.out.println("-----------------文件上传问题");
 				e.printStackTrace();
 				code = 102;
 				msg = "设置失败，文件上传过大";
