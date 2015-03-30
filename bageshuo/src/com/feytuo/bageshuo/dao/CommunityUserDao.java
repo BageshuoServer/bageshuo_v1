@@ -134,4 +134,36 @@ public class CommunityUserDao {
 		}
 		return isInterest;
 	}
+	
+	
+	/**
+	 * 在中间表中删除对应的数据（取消关注）
+	 * @param co_id 社区ID
+	 * @param u_id  用户ID
+	 * @return  是否删除成功
+	 * @throws Exception
+	 */
+	public boolean deleteCommunityUserByUidAndCoid(int u_id,int co_id) throws Exception {
+		boolean isDelete = false;
+		String sql = "delete from community_user where u_id=? and co_id=?";
+		Object[] params = new Object[] { u_id, co_id };
+		QueryRunner runner = new QueryRunner();
+		try {
+			JdbcUtil.beginTransaction(conn); // 开启事务
+			int sqlResult = runner.update(conn, sql, params);
+			if (sqlResult > 0) {
+				isDelete = true;
+				JdbcUtil.commitTransaction(conn); // 提交
+			} else {
+				// 回滚
+				JdbcUtil.rollbackTransaction(conn);
+			}
+		} catch (Exception e) {
+			// 回滚
+			e.printStackTrace();
+			JdbcUtil.rollbackTransaction(conn);
+			return isDelete;
+		}
+		return isDelete;
+	}
 }

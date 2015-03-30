@@ -1,16 +1,14 @@
-package com.feytuo.bageshuo.servlet.user;
+package com.feytuo.bageshuo.servlet.community;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -18,14 +16,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.JSONObject;
 
 import com.feytuo.bageshuo.aliyun.AliYunUpload;
-import com.feytuo.bageshuo.service.UserService;
+import com.feytuo.bageshuo.service.CommunityService;
 
-public class SetUserInfoServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2734563785529248623L;
+public class PublishTopicCommentServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -34,17 +27,12 @@ public class SetUserInfoServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 判断是否是上传表单是否为multipart/form-data类型
-
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=UTF-8"); // 设置Content-Type字段值
-
+		
 		if (ServletFileUpload.isMultipartContent(request)) {
-//			// 创建 DiskFileItemFactory工厂 对象
-//			DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-			// 建立FileItemFactory对象
-			FileItemFactory diskFileItemFactory = new DiskFileItemFactory(); 
+			// 创建 DiskFileItemFactory工厂 对象
+			DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
 			// 创建DiskFileItemFactory的解析器对象
 			ServletFileUpload fileUpload = new ServletFileUpload(
 					diskFileItemFactory);
@@ -60,23 +48,23 @@ public class SetUserInfoServlet extends HttpServlet {
 
 					System.out.println("到现在为止,  " + pBytesRead + " 字节已上传，总大小为 "
 							+ pContentLength);
-
 				}
 			});
 
 			int u_id = 0;
 			String divice_id = "";
-			String u_nick = "";
-			String u_sex = "";
-			String u_home = "";
-			String u_sign = "";
-			String u_head = "";
+			int to_id = 0;
+			String to_com_location = "";
+			String to_com_word = "";
+			String to_com_voice = "";
+
+			Date to_com_time = new Date();
+
 			int code = 0;// 返回code
 			String msg = "";// 返回msg
 			try {
 				// 解析request请求
 				List<FileItem> fileItems = fileUpload.parseRequest(request);
-				System.out.println("items个数："+fileItems.size());
 				// fileItem 对应<input type="file" name="upload" id="upfile" />
 				// fileItem <input type="text" name="user" />
 				// 遍历操作
@@ -94,36 +82,34 @@ public class SetUserInfoServlet extends HttpServlet {
 							System.out.println("divice_id==" + divice_id);
 						}
 
-						if ("u_nick".equals(fileItem.getFieldName())) {
-							u_nick = new String(fileItem.getString().trim().getBytes("ISO-8859-1"),"utf-8");
-							System.out.println("u_nick==" + u_nick);
+						if ("to_id".equals(fileItem.getFieldName())) {
+							to_id = Integer.parseInt(fileItem.getString()
+									.trim());
+							System.out.println("to_id==" + to_id);
 						}
-						if ("u_sex".equals(fileItem.getFieldName())) {
-							u_sex =new String(fileItem.getString().trim().getBytes("ISO-8859-1"),"utf-8");
-							System.out.println("u_sex==" + u_sex);
+						if ("to_com_location".equals(fileItem.getFieldName())) {
+							to_com_location = fileItem.getString().trim();
+							to_com_location = new String(to_com_location.getBytes("ISO-8859-1"),"utf-8");
+							System.out.println("to_com_location==" + to_com_location);
 						}
-						if ("u_home".equals(fileItem.getFieldName())) {
-							u_home = new String(fileItem.getString().trim().getBytes("ISO-8859-1"),"utf-8");
-							System.out.println("u_home==" + u_home);
+						if ("to_com_word".equals(fileItem.getFieldName())) {
+							to_com_word = fileItem.getString().trim();
+							to_com_word = new String(to_com_word.getBytes("ISO-8859-1"),"utf-8");
+							System.out.println("to_com_word==" + to_com_word);
 						}
 
-						if ("u_sign".equals(fileItem.getFieldName())) {
-							u_sign = new String(fileItem.getString().trim().getBytes("ISO-8859-1"),"utf-8");
-							System.out.println("u_sign==" + u_sign);
-						}
 					} else {
-						System.out.println("正在上传阿里云");
 						AliYunUpload upload = new AliYunUpload();
 						upload.createBucket();
-						u_head = upload.putObject(fileItem, "userHead");
+						to_com_voice = upload.putObject(fileItem,
+								"topiccommentVoice");
 						fileItem.delete();
 					}
 				}
 			} catch (FileUploadException e) {
-				System.out.println("-----------------文件上传问题");
 				e.printStackTrace();
 				code = 102;
-				msg = "设置失败，文件上传过大";
+				msg = "评论失败，文件上传过大";
 			}
 			// 封装成json对象
 			JSONObject obj = new JSONObject();
@@ -131,20 +117,20 @@ public class SetUserInfoServlet extends HttpServlet {
 			try {
 				if (code != 102) {
 					// 将数据保存到数据库里面，包括了图片的url
-					UserService userService = new UserService();
-					boolean isSuccess = userService.setUserInfo(u_head,
-							divice_id, u_nick, u_sex, u_home, u_sign, u_id);
+					CommunityService communityuserService = new CommunityService();
+					boolean isSuccess = false;
+				    isSuccess = communityuserService.publishTopicComment(to_com_location, to_com_time, to_com_word, to_com_voice, u_id, to_id);
 					if (isSuccess) {
 						code = 100;
-						msg = "设置成功";
+						msg = "评论成功";
 					} else {
 						code = 101;
-						msg = "设置失败";
+						msg = "评论失败";
 					}
 				}
 
 				JSONObject objData = new JSONObject();
-				objData.put("u_head", u_head);
+				objData.put("to_com_voice", to_com_voice);
 				if (code == 100) {
 					obj.put("data", objData);
 				}
@@ -155,7 +141,6 @@ public class SetUserInfoServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
 }

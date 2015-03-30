@@ -1,10 +1,10 @@
 package com.feytuo.bageshuo.dao;
 
 /**
- * »°Ìâ±í²Ù×÷
+ * ä¸»é¢˜è¡¨æ“ä½œ
  * @author Tms
  *
  */
 public class TopicDao {
-
+   
 }

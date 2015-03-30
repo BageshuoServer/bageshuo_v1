@@ -32,7 +32,6 @@ public class InterestCoServlet extends HttpServlet {
 		CommunityService communityService = new CommunityService();
 		// 封装成json对象
 		JSONObject obj = new JSONObject();
-		UserService userService = new UserService();
 		PrintWriter writer = response.getWriter();
 		int code = 100;
 		String msg = "关注社区成功";
