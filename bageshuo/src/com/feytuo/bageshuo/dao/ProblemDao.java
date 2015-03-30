@@ -1,7 +1,7 @@
 package com.feytuo.bageshuo.dao;
 
 /**
- * °Ë¸çËµÎÊÌâ±í²Ù×÷
+ * é—®é¢˜è¡¨æ“ä½œ
  * @author Tms
  *
  */

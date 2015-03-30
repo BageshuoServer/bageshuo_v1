@@ -9,6 +9,7 @@ import com.feytuo.bageshuo.dao.CommentDao;
 import com.feytuo.bageshuo.dao.CommunityDao;
 import com.feytuo.bageshuo.dao.CommunityUserDao;
 import com.feytuo.bageshuo.dao.InvitationDao;
+import com.feytuo.bageshuo.dao.TopicCommentDao;
 import com.feytuo.bageshuo.dao.UserDao;
 import com.feytuo.bageshuo.domian.Comment;
 import com.feytuo.bageshuo.domian.Community;
@@ -37,6 +38,7 @@ public class CommunityService {
 	InvitationDao invitationDao = new InvitationDao();
 	CommunityDao communityDao = new CommunityDao();
 	CommentDao commentDao = new CommentDao();
+	TopicCommentDao topicCommentDao = new TopicCommentDao();
 
 	public List<UserCommunityInfo> getUserCommunityInfo(int u_id,
 			String device_id) throws Exception {
@@ -272,6 +274,17 @@ public class CommunityService {
 	}
 
 	
+	/**
+	 * 评论帖子
+	 * @param com_location
+	 * @param com_time
+	 * @param com_word
+	 * @param com_voice
+	 * @param u_id
+	 * @param inv_id
+	 * @return
+	 * @throws Exception
+	 */
 	public boolean publishComment(String com_location,
 			java.util.Date com_time, String com_word, String com_voice,
 			int u_id, int inv_id) throws Exception {
@@ -283,5 +296,30 @@ public class CommunityService {
 			throw e;
 		}
 		return ispublishComment;
+	}
+	
+	
+	/**
+	 * 评论话题
+	 * @param com_location
+	 * @param com_time
+	 * @param com_word
+	 * @param com_voice
+	 * @param u_id
+	 * @param inv_id
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean publishTopicComment(String to_com_location,
+			java.util.Date to_com_time, String to_com_word, String to_com_voice,
+			int u_id, int to_id) throws Exception {
+		boolean ispublishTopicComment = false;
+		try {
+			ispublishTopicComment = topicCommentDao.insertCommentTopicByToId(to_com_location, to_com_time, to_com_word, to_com_voice, u_id, to_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return ispublishTopicComment;
 	}
 }
