@@ -74,6 +74,11 @@
     <servlet-name>PublishAnswerServlet</servlet-name>
     <servlet-class>com.feytuo.bageshuo.servlet.bage.PublishAnswerServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>GetUserInfoServlet</servlet-name>
+    <servlet-class>com.feytuo.bageshuo.servlet.user.GetUserInfoServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -159,6 +164,10 @@
   <servlet-mapping>
     <servlet-name>PublishAnswerServlet</servlet-name>
     <url-pattern>/bage/PublishAnswer</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetUserInfoServlet</servlet-name>
+    <url-pattern>/user/getUserInfo</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

@@ -49,7 +49,7 @@ public class PublishProblemServlet extends HttpServlet {
 			});
 
 			int u_id = 0;
-			String divice_id = "";
+			String device_id = "";
 			String pr_location = "";
 			String pr_word = "";
 			String pr_voice = "";	
@@ -77,8 +77,8 @@ public class PublishProblemServlet extends HttpServlet {
 						}
 
 						if ("device_id".equals(fileItem.getFieldName())) {
-							divice_id = fileItem.getString().trim();
-							System.out.println("divice_id==" + divice_id);
+							device_id = fileItem.getString().trim();
+							System.out.println("device_id==" + device_id);
 						}
 
 						if ("pr_location".equals(fileItem.getFieldName())) {
@@ -103,14 +103,14 @@ public class PublishProblemServlet extends HttpServlet {
 						AliYunUpload upload = new AliYunUpload();
 						upload.createBucket();
 						pr_voice = upload.putObject(fileItem,
-								"topiccommentVoice");
+								"problemVoice");
 						fileItem.delete();
 					}
 				}
 			} catch (FileUploadException e) {
 				e.printStackTrace();
 				code = 102;
-				msg = "评论失败，文件上传过大";
+				msg = "提问失败，文件上传过大";
 			}
 			// 封装成json对象
 			JSONObject obj = new JSONObject();
@@ -120,13 +120,13 @@ public class PublishProblemServlet extends HttpServlet {
 					// 将数据保存到数据库里面，包括了图片的url
 					BageService bageService = new BageService();
 					boolean isSuccess = false;
-				    isSuccess = bageService.publishProblem();
+				    isSuccess = bageService.publishProblem(pr_location, device_id, pr_time, pr_word, pr_voice, pr_native, pr_share_num, pr_praise_num, u_id);
 					if (isSuccess) {
 						code = 100;
-						msg = "评论成功";
+						msg = "提问成功";
 					} else {
 						code = 101;
-						msg = "评论失败";
+						msg = "提问失败";
 					}
 				}
 

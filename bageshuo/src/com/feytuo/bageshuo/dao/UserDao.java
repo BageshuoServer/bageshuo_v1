@@ -421,7 +421,7 @@ public class UserDao {
 	 * @throws Exception
 	 */
 	public User queryUserByUid(int u_id) throws Exception{
-		User user= new User();
+		User user = null;
 		String sql = "select * from user where u_id=?";
 		QueryRunner runner = new QueryRunner();
 		try {
